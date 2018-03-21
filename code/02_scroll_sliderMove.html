@@ -1,7 +1,7 @@
 ﻿<html>
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-	<title>scroll</title>
+	<title>scroll2</title>
 	<link href="../libs/Eric Meyer’s “Reset CSS” 2.0.css" rel="stylesheet">
 	<style>
 		body{
@@ -146,30 +146,60 @@
 				}
 				$.extend(true,self.options,options||{});//第一个参数true表示深度合并，将option里面的内容合并到self.option里
 				//||表示或，{}表示空对象，以防未定义报错，这样即使option未定义，self.option就和空集合并，也没有损失什么
-				console.log(self.options.contSelector);//输出验证的内容
+
 				self._initDomEvent();//执行这个函数
+
 				return self;//把self返回去
+			},
+			/**
+			 * 初始化DOM引用
+			 * @method _initDonEvent
+			 * @return {CusScrollBar}
+			 */
+			_initDomEvent:function(){
+				var opts=this.options;//获取对象，方便引用
+				this.$cont=$(opts.contSelector);
+				this.$slider=$(opts.sliderSelector);
+				this.$bar=opts.barSelector?$(opts.barSelector):self.$slider.parent();
+				this.$doc=$(doc);//文档对象
+				this._initSliderDragEvent();//调用
+			},
+			/**
+		 * 初始化滑块拖动功能
+		 * @return {[object]} [this]
+		 */
+			_initSliderDragEvent:function(){
+				var slider=this.$slider;//获取滑动对象
+						sliderEl=slider[0];//获取滑动对象里面的第一个
+				if(sliderEl){//当这第一个滑动对象存在时
+					var doc=this.$doc,
+							dragStartPagePosition,
+							dragStartScrollPosition,
+							dragContBarRate;
+					slider.on("mousedown",function(e){
+						e.preventDefault();//阻止默认事件
+						console.log("mousedown");//检验事件调用
+						doc.on("mousemove.scroll",function(e){//当鼠标移动时，加在文档上，这样鼠标移开了滑块范围也适用
+							//增加命名空间，这样off的时候时有针对性，以免off到了别的事件，毕竟是加在doc上，容易出问题
+							console.log("mousemove");//检验事件调用
+						}).on("mouseup.scroll",function(e){//当鼠标松开时
+							console.log("mouseup");//检验事件调用
+							doc.off(".scroll")//解除事件，命名空间加强针对性
+						});
+					})
+				}
 			}
-		})
-		//CusScrollBar.prototype._init=function(){
-		//console.log("test");只是测试原型方法
-		//}
+		});
 		Scroll.CusScrollBar=CusScrollBar;
 	})(window,document,jQuery);
+
 	var scroll=new Scroll.CusScrollBar({//实例化，传入参数
 		//每new一次实例，都是独立的，不互相影响
-		contSelector:".scroll-wrap",//滚动内容选择器
+		contSelector:".scroll-cont",//滚动内容选择器
 		barSelector:".scroll-bar",//滚动条选择器
-		sliderSelector:"scroll-slider"//滚动滑块选择器
+		sliderSelector:".scroll-slider"//滚动滑块选择器
 	});
-	var scroll2=	new Scroll.CusScrollBar({//实例化，传入参数
-			//每new一次实例，都是独立的，不互相影响
-			contSelector:".scroll-wrap-2",//滚动内容选择器
-			barSelector:".scroll-bar-2",//滚动条选择器
-			sliderSelector:"scroll-slider-2"//滚动滑块选择器
-	});
-	console.log(scroll);
-	console.log(scroll2);//验证得到两个独立的scroll，里面有不同的option内容
+
 </script>
 </body>
 </html>
