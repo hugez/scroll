@@ -1,0 +1,175 @@
+﻿<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+	<title>scroll</title>
+	<link href="../libs/Eric Meyer’s “Reset CSS” 2.0.css" rel="stylesheet">
+	<style>
+		body{
+			background: #ccc;
+		}
+		.scroll-demo{
+			width: 540px;
+			border: 1px solid #e5e5e5;
+			background:#fff;
+			margin:30px auto;
+		}
+		.scroll-tab{
+			height:34px;
+			border-bottom: 1px solid #e5e5e5;
+			color:#666;
+			background: #f8f8f8;
+		}
+		.scroll-tab .tab-item{
+			float:left;
+			font:14px/34px "Microsoft Yahei";
+			height:34px;
+			text-align:center;
+			border-right:1px solid #e5e5e5;
+			padding:0 20px;
+		}
+		.scroll-tab .tab-active{
+			color:#00be3c;
+			background:#fff;
+			border-top:2px solid #00b23c;
+			margin:-1px 0;
+		}
+		.scroll-wrap{
+			width:100%;
+			height:300px;
+			position: relative;
+		}
+		.scroll-wrap .scroll-cont{
+			height:100%;
+			padding:0 15px;
+			overflow:hidden;
+		}
+		.scroll-wrap .scroll-cont h3{
+			font:16px/3 "Microsoft Yahei";
+			text-align:center;
+		}
+		.scroll-wrap .scroll-cont p{
+			font-size:14px;
+			line-height:20px;
+			text-indent:2em;
+			margin-bottom:10px;
+		}
+		.scroll-wrap .scroll-bar{
+			position: absolute;
+			top:0;
+			right:0;
+			width:10px;
+			height:100%;
+			background-color:#eaeaea;
+		}
+		.scroll-wrap .scroll-slider{
+			position: absolute;
+			top:0;
+			left:1px;
+			width:8px;
+			height:30px;
+			background-color:#fff;
+		}
+	</style>
+</head>
+<body>
+<div class="scroll-demo">
+	<ul class="scroll-tab">
+		<li class="tab-item tab-active">一</li>
+		<li class="tab-item">二</li>
+		<li class="tab-item">三</li>
+		<li class="tab-item">四</li>
+	</ul>
+	<div class="scroll-wrap">
+		<div class="scroll-cont">
+			<h3 class="anchor">量子</h3>
+			<div class="scroll-ol">
+				<p>在经典物理学中，根据能量均分定理：能量是连续变化的，可以取任意值。19世纪后期，科学家们发现很多物理现象无法用经典理论解释。</p>
+				<p>1900年左右，M·普朗克试图解决黑体辐射问题，他大胆提出量子假设，并得出了普朗克辐射定律，沿用至今。普朗克提出：像原子作为一切物质的构成单位一样，“能量子”（量子）是能量的最小单位。物体吸收或发射电磁辐射，只能以能量量子的方式进行。</p>
+				<p>当时德国物理界聚焦于黑体辐射问题的研究。普朗克在1900年12月14日的德国物理学学会会议中第一次发表能量量子化数值、一个分子摩尔（mol）的数值及基本电荷等。其数值比以前更准确，提出的理论也成功解决了黑体辐射的问题，标志着量子力学的诞生。</p>
+				<p>
+				20世纪20年代，法国物理学家德布罗意提出“物质波”概念，即一切物质粒子均具备波粒二象性；德国物理学家海森伯等人建立了量子矩阵力学；奥地利物理学家薛定谔建立了量子波动力学。量子理论的发展进入了量子力学阶段。</p>
+				<p>1905年，德国物理学家爱因斯坦把量子概念引进光的传播过程，提出“光量子”（光子）的概念，并提出光同时具有波动和粒子的性质，即光的“波粒二象性”。
+				1928年，英国物理学家狄拉克完成了矩阵力学和波动力学之间的数学等价证明，对量子力学理论进行了系统的总结，并将两大理论体系——相对论和量子力学成功地结合起来，揭开了量子场论的序幕。量子理论是现代物理学的两大基石之一，从微观层面理解宏观现象提供了理论基础。</p>
+				<p>量子假设的提出有力地冲击了经典物理学，促进物理学进入微观层面，奠基现代物理学。但直到现在，物理学家关于量子力学的一些假设仍然不能被充分地证明，仍有很多需要研究的地方。</p>
+			</div>
+			<h3 class="anchor">黑洞</h3>
+			<div class="scroll-ol">
+				<p>2014年5月21日消息，据媒体报道，天文学家发现每个星系中央都潜伏着一个超大质量黑洞，这个超大质量黑洞距离我们大约2.7万光年，星系中央的超大质量黑洞可以统治整个星系内的所有天体，而科学家正在不断发现质量更大的超级黑洞。</p>
+				<p>银河系中央的超大质量黑洞位于人马座A*方向上，根据科学家的统计，银河系的中央隆起中包括了大约1百亿颗恒星，跨度达到数千光年左右，其周围存在一些尘埃团和气体结构，使得我们对银河系中央隆起的观测受到了一定的影响。</p>
+				<p>科学家通过2MASS巡天计划对银河系中央结构进行探索，初步的调查结果显示隆起形状呈现X形，我们在宇宙其他星系中央隆起结构中也发现了类似的形状。
+				高分辨率的图像重点对大约200万颗红巨星进行了调查，科学家对它们的属性相对有所了解，通过对这些天体的观测精确计算出它们的距离等参数，由此可以建立起一个关于银河系中央隆起结构的三维模型。</p>
+				<p>
+				科学家使用MPG / ESO 2.2米望远镜对中央隆起结构进行了研究，对该区域内的恒星系统分布展开观测调查，我们所观察到的银河系中央隆起结构的恒星群似乎以X形演化，紧贴着银河系平面，这些观测结果都符合我们对银河系中央隆起结构的一些判断。</p>
+				<p>1905年，德国物理学家爱因斯坦把量子概念引进光的传播过程，提出“光量子”（光子）的概念，并提出光同时具有波动和粒子的性质，即光的“波粒二象性”。
+				1928年，英国物理学家狄拉克完成了矩阵力学和波动力学之间的数学等价证明，对量子力学理论进行了系统的总结，并将两大理论体系——相对论和量子力学成功地结合起来，揭开了量子场论的序幕。量子理论是现代物理学的两大基石之一，从微观层面理解宏观现象提供了理论基础。</p>
+			</div>
+			<h3 class="anchor">宇宙</h3>
+			<div class="scroll-ol">
+				<p>通过宇宙微波背景辐射的观测发现我们的宇宙已经膨胀了138.2亿年，最新的研究认为宇宙的直径可达到920亿光年，甚至更大。[1] </p>
+				<p>人类所观察到的部分宇宙的物件大约是由4.9%的普通物质（构成恒星、行星、气体和尘埃的物质）或“重子”，26.8%的暗物质和68.3%的暗能量构成。重子物质构成星系际的“蛛网”。[2-3]</p>
+				<p>在宇宙中，地球是目前人类所知唯一一颗有生命存在的星球。</p>
+				<p>宇宙大爆炸是描述宇宙诞生初始条件及其后续演化的宇宙学模型，这一模型得到了当今科学研究和观测最广泛且最精确的支持。宇宙学家通常所指的大爆炸观点为：宇宙是在过去有限的时间之前，由一个密度极大且温度极高的太初状态演变而来的，并经过不断的膨胀到达今天的状态。[4] </p>
+				<p>广义的宇宙定义是万物的总称，是时间和空间的统一。狭义的宇宙定义是地球大气层以外的空间和物质。“宇宙航行”的“宇宙”定义就是狭义的“宇宙”定义，宇宙航行意思就是在大气层以外的空间航行。</p>
+				<p>暗物质和暗能量分别通过对普通物质产生的引力作用和推动宇宙做加速膨胀而表明它们的存在。如果暗能量不存在，那么物质间的万有引力作用就会减慢宇宙的膨胀，但是天文观测表明我们的宇宙在做加速膨胀运动。宇宙由一切天体组成。</p>
+			</div>
+			<h3 class="anchor">星云</h3>
+			<div class="scroll-ol">
+				<p>星云（源自拉丁文的：nebulae或nebul&aelig;，与ligature或nebulas，意思就是云pl.）是尘埃、氢气、氦气、和其他电离气体聚集的星际云。原本是天文学上通用的名词，泛指任何天文上的扩散天体，</p>
+				<p>包括在银河系之外的星系（一些过去的用法依然留存着，例如仙女座星系依然使用爱德温·哈勃发现它是星系之前的名称，被称为仙女座星云）。星云通常也是恒星形成的区域，例如鹰星云。</p>
+				<p>这个星云刻画出NASA最著名的影像：创生之柱。在这个区域形成的气体、尘埃和其他材料挤在一起，聚集了巨大的质量，这吸引了更多的质量，最后大到足以形成恒星。据了解，剩余的材料还可以形成行星和行星系的其它天体。</p>
+				<p>星云是由星际空间的气体和尘埃结合成的云雾状天体。星云里的物质密度是很低的，若拿地球上的标准来衡量的话，有些地方是真空的。可是星云的体积十分庞大，常常方圆达几十光年。所以，一般星云比太阳要重的多。</p>
+				<p>星云的形状是多姿多态的。星云和恒星有着“血缘”关系。恒星抛出的气体将成为星云的部分，星云物质在引力作用下压缩成为恒星。在一定条件下，星云和恒星是能够互相转化的。</p>
+				<p>看来像云雾状的天体。银河系内太阳系以外一切非恒星状的气体尘埃云。</p>
+			</div>
+		</div>
+		<div class="scroll-bar">
+			<div class="scroll-slider">
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../libs/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+	var Scroll={};//定义一个全局变量，给它加属性，以免出现undefined
+	(function(win,doc,$){//分别用win,doc,$代表window,document,jQuery
+		function CusScrollBar(options){
+			this._init(options);//调用this的_init实例方法，并且把参数传进来
+		}
+		$.extend(CusScrollBar.prototype,{
+			_init:function(options){//参数为options
+				var self=this;//防止this的混用
+				self.options={//下面有些没有传值，待实例化的是偶再传参数
+					scrollDir:"y",//滚动方向，默认y方向
+					contSelector:"",//滚动内容选择器
+					barSelector:"",//滚动条选择器
+					sliderSelector:""//滚动滑块选择器
+				}
+				$.extend(true,self.options,options||{});//第一个参数true表示深度合并，将option里面的内容合并到self.option里
+				//||表示或，{}表示空对象，以防未定义报错，这样即使option未定义，self.option就和空集合并，也没有损失什么
+				console.log(self.options.contSelector);//输出验证的内容
+				self._initDomEvent();//执行这个函数
+				return self;//把self返回去
+			}
+		})
+		//CusScrollBar.prototype._init=function(){
+		//console.log("test");只是测试原型方法
+		//}
+		Scroll.CusScrollBar=CusScrollBar;
+	})(window,document,jQuery);
+	var scroll=new Scroll.CusScrollBar({//实例化，传入参数
+		//每new一次实例，都是独立的，不互相影响
+		contSelector:".scroll-wrap",//滚动内容选择器
+		barSelector:".scroll-bar",//滚动条选择器
+		sliderSelector:"scroll-slider"//滚动滑块选择器
+	});
+	var scroll2=	new Scroll.CusScrollBar({//实例化，传入参数
+			//每new一次实例，都是独立的，不互相影响
+			contSelector:".scroll-wrap-2",//滚动内容选择器
+			barSelector:".scroll-bar-2",//滚动条选择器
+			sliderSelector:"scroll-slider-2"//滚动滑块选择器
+	});
+	console.log(scroll);
+	console.log(scroll2);//验证得到两个独立的scroll，里面有不同的option内容
+</script>
+</body>
+</html>
