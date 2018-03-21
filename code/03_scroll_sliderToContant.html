@@ -132,67 +132,115 @@
 <script type="text/javascript">
 	var Scroll={};//定义一个全局变量，给它加属性，以免出现undefined
 	(function(win,doc,$){//分别用win,doc,$代表window,document,jQuery
-		function CusScrollBar(options){
-			this._init(options);//调用this的_init实例方法，并且把参数传进来
-		}
-		$.extend(CusScrollBar.prototype,{
-			_init:function(options){//参数为options
-				var self=this;//防止this的混用
-				self.options={//下面有些没有传值，待实例化的是偶再传参数
-					scrollDir:"y",//滚动方向，默认y方向
-					contSelector:"",//滚动内容选择器
-					barSelector:"",//滚动条选择器
-					sliderSelector:""//滚动滑块选择器
-				}
-				$.extend(true,self.options,options||{});//第一个参数true表示深度合并，将option里面的内容合并到self.option里
-				//||表示或，{}表示空对象，以防未定义报错，这样即使option未定义，self.option就和空集合并，也没有损失什么
-
-				self._initDomEvent();//执行这个函数
-
-				return self;//把self返回去
-			},
-			/**
-			 * 初始化DOM引用
-			 * @method _initDonEvent
-			 * @return {CusScrollBar}
-			 */
-			_initDomEvent:function(){
-				var opts=this.options;//获取对象，方便引用
-				this.$cont=$(opts.contSelector);
-				this.$slider=$(opts.sliderSelector);
-				this.$bar=opts.barSelector?$(opts.barSelector):self.$slider.parent();
-				this.$doc=$(doc);//文档对象
-				this._initSliderDragEvent();//调用
-			},
-			/**
-		 * 初始化滑块拖动功能
-		 * @return {[object]} [this]
-		 */
-			_initSliderDragEvent:function(){
-				var slider=this.$slider;//获取滑动对象
-						sliderEl=slider[0];//获取滑动对象里面的第一个
-				if(sliderEl){//当这第一个滑动对象存在时
-					var doc=this.$doc,
-							dragStartPagePosition,
-							dragStartScrollPosition,
-							dragContBarRate;
-					slider.on("mousedown",function(e){
-						e.preventDefault();//阻止默认事件
-						console.log("mousedown");//检验事件调用
-						doc.on("mousemove.scroll",function(e){//当鼠标移动时，加在文档上，这样鼠标移开了滑块范围也适用
-							//增加命名空间，这样off的时候时有针对性，以免off到了别的事件，毕竟是加在doc上，容易出问题
-							console.log("mousemove");//检验事件调用
-						}).on("mouseup.scroll",function(e){//当鼠标松开时
-							console.log("mouseup");//检验事件调用
-							doc.off(".scroll")//解除事件，命名空间加强针对性
-						});
-					})
-				}
+			function CusScrollBar(options){
+				this._init(options);//调用this的_init实例方法，并且把参数传进来
 			}
-		});
-		Scroll.CusScrollBar=CusScrollBar;
-	})(window,document,jQuery);
+			$.extend(CusScrollBar.prototype,{
+					_init:function(options){//参数为options
+						var self=this;//防止this的混用
+						self.options={//下面有些没有传值，待实例化的是偶再传参数
+							scrollDir:"y",//滚动方向，默认y方向
+							contSelector:"",//滚动内容选择器
+							barSelector:"",//滚动条选择器
+							sliderSelector:""//滚动滑块选择器
+						}
+						$.extend(true,self.options,options||{});//第一个参数true表示深度合并，将option里面的内容合并到self.option里
+						//||表示或，{}表示空对象，以防未定义报错，这样即使option未定义，self.option就和空集合并，也没有损失什么
 
+						self._initDomEvent();//执行这个函数
+
+						return self;//把self返回去
+					},
+					/**
+					 * 初始化DOM引用
+					 * @method _initDonEvent
+					 * @return {CusScrollBar}
+					 */
+					_initDomEvent:function(){//获取对象，方便引用
+							var opts=this.options;
+							//可视区
+							this.$cont=$(opts.contSelector);
+							//滚动滑块对象
+							this.$slider=$(opts.sliderSelector);
+							//滚动条对象
+							this.$bar=opts.barSelector?$(opts.barSelector):self.$slider.parent();
+							//文档对象
+							this.$doc=$(doc);
+
+							this._initSliderDragEvent()
+									._bindContScroll();//调用
+					},
+					/**
+				 * 初始化滑块拖动功能
+				 * @return {[object]} [this]
+				 */
+					_initSliderDragEvent:function(){
+							var self=this,
+									slider=this.$slider,//获取滑动对象
+									sliderEl=slider[0];//转化为dom
+							if(sliderEl){//当这第一个滑动对象存在时
+									var doc=this.$doc,
+											dragStartPagePosition,
+											dragStartScrollPosition,
+											dragContBarRate;
+									function mousemoveHandler(e){
+											e.preventDefault();
+											console.log("mousemove");
+											if(dragStartPagePosition==null){//等于null相当于没有在滑块上按下鼠标
+												return;
+											}
+											self.scrollTo(dragStartPagePosition+(e.pageY-dragStartPagePosition)*dragContBarRate);
+									}
+									slider.on("mousedown",function(e){
+											e.preventDefault();//阻止默认事件
+											console.log("mousedown");//检验事件调用
+											dragStartPagePosition=e.pageY;//鼠标位置
+											dragStartScrollPosition=self.$cont[0].scrollTop;//超出元素上方的距离
+											dragContBarRate=self.getMaxScrollPosition()/self.getMaxSliderPosition();
+											doc.on("mousemove.scroll",mousemoveHandler)
+											.on("mouseup.scroll",function(e){//当鼠标松开时
+													console.log("mouseup");//检验事件调用
+													doc.off(".scroll");//解除事件，命名空间加强针对性
+											});
+									});
+							}
+							return self;
+					},
+					//监听内容滚动，同步滑块位置
+					_bindContScroll:function(){
+							var self=this;
+							self.$cont.on("scroll",function(){
+									var sliderEl=self.$slider && self.$slider[0];
+									if(sliderEl){
+											sliderEl.style.top=self.getSliderPosition()+"px";
+									}
+							});
+							return self;
+					},
+					//计算滑块当前位置
+					getSliderPosition:function(){
+							var self=this;
+									maxSliderPosition=self.getMaxSliderPosition();
+
+							return Math.min(maxSliderPosition,maxSliderPosition*self.$cont[0].scrollTop/self.getMaxScrollPosition());
+					},
+					//内容可滚动高度
+					getMaxScrollPosition:function(){
+						var self=this;
+						return Math.max(self.$cont.height(),self.$cont[0].scrollHeight)-self.$cont.height();//scrollHeight整体高度
+					},
+					//滑块可移动距离
+					getMaxSliderPosition:function(){
+						var self=this;
+						return self.$bar.height()-self.$slider.height();
+					},
+					scrollTo:function (positionVal){
+						var self=this;
+						self.$cont.scrollTop(positionVal);//scrollTop既可以获取值也可以设置值
+					}
+			});
+			Scroll.CusScrollBar=CusScrollBar;
+	})(window,document,jQuery);
 	var scroll=new Scroll.CusScrollBar({//实例化，传入参数
 		//每new一次实例，都是独立的，不互相影响
 		contSelector:".scroll-cont",//滚动内容选择器
