@@ -116,10 +116,10 @@
 			<div class="scroll-ol">
 				<p>星云（源自拉丁文的：nebulae或nebul&aelig;，与ligature或nebulas，意思就是云pl.）是尘埃、氢气、氦气、和其他电离气体聚集的星际云。原本是天文学上通用的名词，泛指任何天文上的扩散天体，</p>
 				<p>包括在银河系之外的星系（一些过去的用法依然留存着，例如仙女座星系依然使用爱德温·哈勃发现它是星系之前的名称，被称为仙女座星云）。星云通常也是恒星形成的区域，例如鹰星云。</p>
-				<p>这个星云刻画出NASA最著名的影像：创生之柱。在这个区域形成的气体、尘埃和其他材料挤在一起，聚集了巨大的质量，这吸引了更多的质量，最后大到足以形成恒星。据了解，剩余的材料还可以形成行星和行星系的其它天体。</p>
-				<p>星云是由星际空间的气体和尘埃结合成的云雾状天体。星云里的物质密度是很低的，若拿地球上的标准来衡量的话，有些地方是真空的。可是星云的体积十分庞大，常常方圆达几十光年。所以，一般星云比太阳要重的多。</p>
-				<p>星云的形状是多姿多态的。星云和恒星有着“血缘”关系。恒星抛出的气体将成为星云的部分，星云物质在引力作用下压缩成为恒星。在一定条件下，星云和恒星是能够互相转化的。</p>
-				<p>看来像云雾状的天体。银河系内太阳系以外一切非恒星状的气体尘埃云。</p>
+
+			</div>
+			<div class="correct-bot">
+				<!--用来补足文本不够高度时的空缺-->
 			</div>
 		</div>
 		<div class="scroll-bar">
@@ -143,7 +143,13 @@
 							contSelector:"",//滚动内容选择器
 							barSelector:"",//滚动条选择器
 							sliderSelector:"",//滚动滑块选择器
-							wheelStep:10//滚轮步长
+							tabItemSelector:".tab-item",//标签选择器
+							tabActiveClass:"tab-active",//选中的标签类名
+							anchorSelector:".anchor",
+							wheelStep:10,//滚轮步长
+							correctSelector:".correct-bot",//校正补足的块
+							articleSelector:".scroll-ol"//文章选择器
+
 						}
 						$.extend(true,self.options,options||{});//第一个参数true表示深度合并，将option里面的内容合并到self.option里
 						//||表示或，{}表示空对象，以防未定义报错，这样即使option未定义，self.option就和空集合并，也没有损失什么
@@ -165,12 +171,37 @@
 							this.$slider=$(opts.sliderSelector);
 							//滚动条对象
 							this.$bar=opts.barSelector?$(opts.barSelector):self.$slider.parent();
+							//标签项
+							this.$tabItem=$(opts.tabItemSelector);
+							//锚点项
+							this.$anchor=$(opts.anchorSelector);
+							//正文
+							this.$article=$(opts.articleSelector);
+							//校正元素
+							this.$correct=$(opts.correctSelector);
 							//文档对象
 							this.$doc=$(doc);
 
-							this._initSliderDragEvent()
+							this._initArticleHeight()
+									._initSliderDragEvent()
+									._initTabEvent()
 									._bindContScroll()//调用
 									._bindMousewheel();
+					},
+					/**
+					 * 初始化文档高度
+					 * @return {[Object]} [this]
+					 */
+					_initArticleHeight:function(){
+							var self=this,
+									lastArticle=self.$article.last();
+							var lastArticleHeight=lastArticle.height(),
+									contHeight=self.$cont.height();
+							if(lastArticleHeight < contHeight){
+									self.$correct[0].style.height=contHeight - lastArticleHeight - self.$anchor.outerHeight() + "px";
+									//校正元素高度=容器高度-文章高度-标题外部高度(包括padding margin)
+							}
+							return self;
 					},
 					/**
 				 * 初始化滑块拖动功能
@@ -208,6 +239,28 @@
 							}
 							return self;
 					},
+
+					/**
+					 * 初始化标签切换功能
+					 * @return{[Object]} [this]
+					 */
+					_initTabEvent:function(){
+							var self=this;
+							self.$tabItem.on("click",function(e){
+									e.preventDefault();
+									var index=$(this).index();
+									self.changeTabSelect(index);
+									self.scrollTo(self.$cont[0].scrollTop + self.getAnchorPosition(index));
+									//滚出可视区的高度+指定锚点与内容容器的距离
+							});
+							return self;
+					},
+					//切换标签的选中
+					changeTabSelect:function(index){
+							var self=this,
+									active=self.options.tabActiveClass;
+							return self.$tabItem.eq(index).addClass(active).siblings().removeClass(active);//给index添加类名同时移除兄弟元素的类名
+					},
 					//监听内容滚动，同步滑块位置
 					_bindContScroll:function(){
 							var self=this;
@@ -229,6 +282,9 @@
 							});
 
 							return self;
+					},
+					getAnchorPosition:function(index){
+						return this.$anchor.eq(index).position().top;
 					},
 					//计算滑块当前位置
 					getSliderPosition:function(){
